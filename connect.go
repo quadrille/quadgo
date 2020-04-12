@@ -154,14 +154,14 @@ func getMembers(addrs []string) []string {
 func (q *QuadrilleClient) getLeader() (string, error) {
 	leaderSrchCh := make(chan string)
 	for _, member := range q.members {
-		go func() {
+		go func(member string) {
 			flag := isLeader(member)
 			if flag {
 				leaderSrchCh <- member
 			} else {
 				leaderSrchCh <- ""
 			}
-		}()
+		}(member)
 	}
 	leaderAddr := ""
 	for i := 0; i < len(q.members); i++ {
