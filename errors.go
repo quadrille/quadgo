@@ -3,5 +3,6 @@ package quadgo
 import "errors"
 
 var (
-	NoLeaderFoundErr = errors.New("no leader found")
+	ErrNoLeaderFound  = errors.New("no leader found")
+	ErrEmptyBulkWrite = errors.New("cannot execute empty bulkwrite operation")
 )

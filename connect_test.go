@@ -121,3 +121,11 @@ func testGetNeighbors(t *testing.T, lat, lon float64) {
 		t.Fatalf("Didn't get neighbors")
 	}
 }
+
+//func TestBulkWrite(t *testing.T) {
+//	bulk := NewBulkWrite()
+//	bulk.Add(NewInsertOperation("loc123", 12, 77, map[string]interface{}{}))
+//	bulk.Add(NewUpdateOperation("loc123", 17, 78, map[string]interface{}{"reg_no": "KA03NB5352"}))
+//	client := NewClient("localhost:5679")
+//	client.ExecuteBulk(bulk)
+//}

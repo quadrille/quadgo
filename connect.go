@@ -171,7 +171,7 @@ func (q *QuadrilleClient) getLeader() (string, error) {
 		}
 	}
 	if leaderAddr == "" {
-		return "", NoLeaderFoundErr
+		return "", ErrNoLeaderFound
 	}
 	return leaderAddr, nil
 }
