@@ -79,6 +79,81 @@ func (q *QuadrilleClient) UpdateData(locationID string, data map[string]interfac
 	return
 }
 
+func (q *QuadrilleClient) ExecuteBulk(bulk *bulkWrite) (err error) {
+	s, err := bulk.GetStr()
+	if err != nil {
+		return
+	}
+	_, err = q.getResponse(s)
+	return
+}
+
+type bulkWrite struct {
+	operations []bulkWriteOperation
+}
+
+func NewBulkWrite() *bulkWrite {
+	return &bulkWrite{operations: make([]bulkWriteOperation, 0)}
+}
+
+func (b *bulkWrite) Add(operation *bulkWriteOperation) {
+	b.operations = append(b.operations, *operation)
+}
+
+func (b *bulkWrite) GetStr() (s string, err error) {
+	if len(b.operations) == 0 {
+		err = ErrEmptyBulkWrite
+	}
+	dataBytes, err := json.Marshal(b.operations)
+	s = fmt.Sprintf("bulkwrite %s\n", string(dataBytes))
+	return
+}
+
+type bulkWriteOperation struct {
+	Op         string                 `json:"op"`
+	LocationID string                 `json:"location_id"`
+	Lat        float64                `json:"lat"`
+	Lon        float64                `json:"lon"`
+	Data       map[string]interface{} `json:"data"`
+}
+
+func NewInsertOperation(locationID string, lat, lon float64, data map[string]interface{}) *bulkWriteOperation {
+	return &bulkWriteOperation{
+		Op:         "insert",
+		LocationID: locationID,
+		Lat:        lat,
+		Lon:        lon,
+		Data:       data,
+	}
+}
+
+func NewUpdateOperation(locationID string, lat, lon float64, data map[string]interface{}) *bulkWriteOperation {
+	return &bulkWriteOperation{
+		Op:         "update",
+		LocationID: locationID,
+		Lat:        lat,
+		Lon:        lon,
+		Data:       data,
+	}
+}
+
+func NewUpdateLocOperation(locationID string, lat, lon float64) *bulkWriteOperation {
+	return &bulkWriteOperation{
+		Op:         "updateloc",
+		LocationID: locationID,
+		Lat:        lat,
+		Lon:        lon,
+	}
+}
+
+func NewUpdateDataOperation(locationID string, data map[string]interface{}) *bulkWriteOperation {
+	return &bulkWriteOperation{
+		Op:         "update",
+		LocationID: locationID,
+		Data:       data,
+	}
+}
+
 //func (q *QuadrilleClient) IsLeader() (isLeader bool, err error) {
 //	responseStr, err := q.getResponse(fmt.Sprintf("isleader")))
 //	isLeader = false
