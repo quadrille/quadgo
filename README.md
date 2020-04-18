@@ -94,6 +94,28 @@ Update **data** only
 err := quadgo.UpdateData("loc123", map[string]interface{}{"some_key": "some_val3"})
 ```
 
+### BulkWrite
+
+Used to batch multiple write operations in a single QuadrilleDB operation. Currently supported operations include insert, update, updateloc, updatedata
+
+```go
+bulk := quadgo.NewBulkWrite()
+
+bulk.Add(quadgo.NewInsertOperation("loc123", 12, 77, map[string]interface{}{}))
+bulk.Add(quadgo.NewUpdateLocOperation("loc456", 17, 78)
+
+quadClient.ExecuteBulk(bulk)
+```
+
+Use these factory methods to prepare any of the supported operations for BulkWrite
+
+- NewInsertOperation(locationID string, lat, lon float64, data map[string]interface{})
+- NewUpdateOperation(locationID string, lat, lon float64, data map[string]interface{})
+- NewUpdateLocOperation(locationID string, lat, lon float64)
+- NewUpdateDataOperation(locationID string, data map[string]interface{})
+
+Each of the above factory methods returns a \*bulkWriteOperation which can be passed to a bulk.Add() call.
+
 ### Close connection
 
 ```go
