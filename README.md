@@ -2,7 +2,7 @@
 
 ###### The official QuadrilleDB Go Driver 
 
-[![Travis Build](https://api.travis-ci.org/quadrille/quadgo.svg)](https://api.travis-ci.org/quadrille/quadgo) [![Go Report Card](https://goreportcard.com/badge/github.com/quadrille/quadgo)](https://goreportcard.com/report/github.com/quadrille/quadgo)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/quadrille/quadgo/tree/master.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/quadrille/quadgo/tree/master) [![Go Report Card](https://goreportcard.com/badge/github.com/quadrille/quadgo)](https://goreportcard.com/report/github.com/quadrille/quadgo)
 
 Quadgo is the official QuadrilleDB Go driver. It has a simple and intuitive API which enables Go developers to quickly get up and running without any hassle.
 
